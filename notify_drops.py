@@ -97,7 +97,7 @@ def main():
     body = "\n".join(lines).encode()
     req = urllib.request.Request(
         f"https://ntfy.sh/{topic}", data=body,
-        headers={"Title": "Jays ticket price drops",
+        headers={"Title": "SeatDip: Jays price drops",
                  "Tags": "baseball,chart_with_downwards_trend",
                  "Priority": "default"})
     with urllib.request.urlopen(req, timeout=30) as r:

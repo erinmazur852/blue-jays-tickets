@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 64">
+  <!-- icon -->
+  <rect width="64" height="64" rx="14" fill="#134a8e"/>
+  <polyline points="9,13 23,27 30,21 41,30 55,9" fill="none" stroke="#4ade80"
+            stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="41" cy="30" r="4.5" fill="#fff" stroke="#4ade80" stroke-width="2.5"/>
+  <rect x="22" y="38" width="20" height="11" rx="3" fill="#fff"/>
+  <rect x="17" y="50" width="30" height="7" rx="3.5" fill="#fff"/>
+  <!-- wordmark -->
+  <text x="78" y="45" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="36" font-weight="800" letter-spacing="-0.5">
+    <tspan fill="#134a8e">Seat</tspan><tspan fill="#0c8a3e">Dip</tspan>
+  </text>
+</svg>

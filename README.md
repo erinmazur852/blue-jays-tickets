@@ -1,4 +1,4 @@
-# Blue Jays Ticket Price Tracker
+# SeatDip — Blue Jays Ticket Price Tracker
 
 Tracks the lowest resale price (overall and per section group) for every
 remaining Blue Jays home game at Rogers Centre, in CAD, and pushes a phone
