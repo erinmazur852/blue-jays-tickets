@@ -14,9 +14,11 @@ notification when prices drop.
 - **`notify_drops.py`** — compares the two latest snapshots and pushes a
   digest to [ntfy.sh](https://ntfy.sh) when any game's price dropped, new
   listings appeared, or a section dropped 5%+. Needs `NTFY_TOPIC`.
-- **`tracker.html`** — dashboard. Open locally after a `git pull` (it reads
-  `data.js`). Section dropdown, per-game section breakdown, per-section
-  target prices (stored in your browser), trend sparklines, buy links.
+- **`index.html`** — dashboard, hosted at
+  https://erinmazur852.github.io/blue-jays-tickets/ (refreshes with every
+  snapshot commit). Section dropdown, per-game section breakdown,
+  per-section target prices (stored in your browser), trend sparklines,
+  buy links. Also works locally — just open the file.
 - **`.github/workflows/track.yml`** — runs the above every 30 minutes.
   GitHub may delay scheduled runs by a few minutes under load.
 
