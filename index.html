@@ -96,6 +96,23 @@
 </div>
 <script src="data.js"></script>
 <script>
+// On Vercel the bundled data.js is frozen at deploy time, so fetch the
+// latest snapshot straight from the GitHub repo instead. Everywhere else
+// (GitHub Pages, local file) the bundled data.js is already current.
+const RAW_DATA = 'https://raw.githubusercontent.com/erinmazur852/blue-jays-tickets/main/data.json';
+(async function boot() {
+  let ph = typeof PRICE_HISTORY !== 'undefined' ? PRICE_HISTORY : [];
+  let sh = typeof SECTION_HISTORY !== 'undefined' ? SECTION_HISTORY : [];
+  if (location.hostname.endsWith('.vercel.app')) {
+    try {
+      const d = await (await fetch(RAW_DATA, { cache: 'no-store' })).json();
+      ph = d.price_history; sh = d.section_history;
+    } catch (e) { /* fall back to bundled data */ }
+  }
+  init(ph, sh);
+})();
+
+function init(PRICE_HISTORY, SECTION_HISTORY) {
 const fmt = c => '$' + (c / 100).toFixed(c % 100 ? 2 : 0);
 const targets = JSON.parse(localStorage.getItem('jaysTargets') || '{}');
 const expanded = new Set();
@@ -304,6 +321,7 @@ document.querySelectorAll('.controls button[data-filter]').forEach(b => {
 });
 sel.addEventListener('change', () => { sectionView = sel.value; render(); renderStats(); });
 render(); renderStats();
+}
 </script>
 </body>
 </html>
