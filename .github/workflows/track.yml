@@ -1,0 +1,42 @@
+name: track-prices
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: track-prices
+  cancel-in-progress: false
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: snapshot prices
+        run: python fetch_prices.py
+
+      - name: notify on drops
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python notify_drops.py
+
+      - name: commit history
+        run: |
+          git config user.name "jays-tracker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add price_history.csv section_history.csv data.js
+          git diff --cached --quiet && exit 0
+          git commit -m "price snapshot"
+          git pull --rebase
+          git push

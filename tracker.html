@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Blue Jays Ticket Price Tracker</title>
+<style>
+  :root {
+    --navy: #134a8e; --blue: #1d2d5c; --red: #e8291c;
+    --bg: #f5f7fa; --card: #fff; --text: #1a2233; --muted: #6b7585;
+    --green: #0c8a3e; --green-bg: #e6f6ec; --drop: #0c8a3e; --rise: #c0392b;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         background: var(--bg); color: var(--text); }
+  header { background: var(--navy); color: #fff; padding: 18px 24px; }
+  header h1 { margin: 0; font-size: 20px; }
+  header .sub { font-size: 13px; opacity: .85; margin-top: 4px; }
+  .wrap { max-width: 1150px; margin: 0 auto; padding: 16px 24px 60px; }
+  .controls { display: flex; gap: 10px; align-items: center; margin: 14px 0; flex-wrap: wrap; }
+  .controls button { border: 1px solid #cfd6e0; background: #fff; padding: 6px 12px;
+    border-radius: 6px; cursor: pointer; font-size: 13px; }
+  .controls button.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .controls select { border: 1px solid #cfd6e0; background: #fff; padding: 6px 10px;
+    border-radius: 6px; font-size: 13px; }
+  .controls .spacer { flex: 1; }
+  .controls label { font-size: 13px; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; background: var(--card);
+          border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .5px;
+       color: var(--muted); padding: 10px 12px; border-bottom: 2px solid #e6eaf0;
+       background: #fafbfd; }
+  td { padding: 10px 12px; border-bottom: 1px solid #eef1f5; font-size: 14px; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr.below-target td { background: var(--green-bg); }
+  .game-date { font-weight: 600; white-space: nowrap; }
+  .game-time { color: var(--muted); font-size: 12px; }
+  .price { font-weight: 700; font-size: 16px; white-space: nowrap; }
+  .prefee { color: var(--muted); font-size: 11px; }
+  .delta-drop { color: var(--drop); font-weight: 600; font-size: 13px; white-space: nowrap; }
+  .delta-rise { color: var(--rise); font-weight: 600; font-size: 13px; white-space: nowrap; }
+  .delta-flat { color: var(--muted); font-size: 13px; }
+  .low { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .low b { color: var(--text); }
+  input.target { width: 70px; padding: 5px 6px; border: 1px solid #cfd6e0; border-radius: 6px;
+    font-size: 13px; text-align: right; }
+  a.buy { display: inline-block; background: var(--red); color: #fff; text-decoration: none;
+    padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  a.buy:hover { filter: brightness(1.1); }
+  .spark { display: block; }
+  .badge { display: inline-block; background: var(--green); color: #fff; font-size: 10px;
+    padding: 2px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle; }
+  .stats { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+  .stat { background: var(--card); border-radius: 10px; padding: 12px 16px; flex: 1; min-width: 150px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .stat .n { font-size: 22px; font-weight: 700; }
+  .stat .l { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .empty { padding: 40px; text-align: center; color: var(--muted); }
+  code { background: #eef1f5; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+  button.expand { border: none; background: none; cursor: pointer; font-size: 13px;
+    color: var(--navy); padding: 0; }
+  tr.detail > td { background: #fafbfd; padding: 6px 12px 14px 36px; }
+  table.sections { box-shadow: none; border: 1px solid #e6eaf0; }
+  table.sections td, table.sections th { padding: 6px 10px; font-size: 13px; }
+  table.sections .price { font-size: 14px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Blue Jays Home Games — Resale Price Tracker</h1>
+  <div class="sub" id="updated"></div>
+</header>
+<div class="wrap">
+  <div class="stats" id="stats"></div>
+  <div class="controls">
+    <button data-filter="all" class="active">All upcoming</button>
+    <button data-filter="week">Next 7 days</button>
+    <button data-filter="target">At/below target</button>
+    <button data-filter="drops">Dropped since last check</button>
+    <select id="sectionSel"><option value="all">All sections (overall lowest)</option></select>
+    <div class="spacer"></div>
+    <label>all prices CAD, all-in (fees incl.) · click ▸ for section breakdown · set a target $ to flag deals</label>
+  </div>
+  <table>
+    <thead><tr>
+      <th></th><th>Game</th><th>Opponent</th><th>Lowest now</th><th>Since last check</th>
+      <th>Season low / high</th><th>Trend</th><th>Target $</th><th></th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p style="color:var(--muted);font-size:12px;margin-top:14px">
+    refresh prices: run <code>python3 fetch_prices.py</code> in this folder, then reload this page
+    (<code>--no-sections</code> for a quick overall-only check).
+    history accumulates in <code>price_history.csv</code> and <code>section_history.csv</code>.
+    targets are per section view: a target set while viewing "100 Infield" only applies to that section.
+  </p>
+</div>
+<script src="data.js"></script>
+<script>
+const fmt = c => '$' + (c / 100).toFixed(c % 100 ? 2 : 0);
+const targets = JSON.parse(localStorage.getItem('jaysTargets') || '{}');
+const expanded = new Set();
+
+function toCad(r) {
+  const rate = parseFloat(r.usd_cad_rate) || 1.4;
+  r.cad_total = Math.round(r.min_total_cents * rate);
+  r.cad_prefee = Math.round(r.min_prefee_cents * rate);
+  return r;
+}
+
+// series helper: latest / prev / low / high from a list of snapshots
+function summarize(snaps) {
+  snaps.sort((a, b) => a.checked_at.localeCompare(b.checked_at));
+  const latest = snaps[snaps.length - 1];
+  const prev = snaps.length > 1 ? snaps[snaps.length - 2] : null;
+  const prices = snaps.map(s => s.cad_total).filter(p => p > 0);
+  return {
+    cur: latest.cad_total, prefee: latest.cad_prefee, buy_url: latest.buy_url,
+    listings: latest.listings || 0,
+    prev: prev ? prev.cad_total : null,
+    low: prices.length ? Math.min(...prices) : 0,
+    high: prices.length ? Math.max(...prices) : 0,
+    series: snaps.map(s => s.cad_total),
+    checks: snaps.length,
+  };
+}
+
+// overall history grouped by game
+const byEvent = {};
+for (const r of PRICE_HISTORY) {
+  (byEvent[r.event_id] = byEvent[r.event_id] || []).push(toCad(r));
+}
+// section history grouped by game then section group
+const SH = typeof SECTION_HISTORY !== 'undefined' ? SECTION_HISTORY : [];
+const bySection = {};
+const allGroups = new Set();
+for (const r of SH) {
+  allGroups.add(r.section_group);
+  const ev = (bySection[r.event_id] = bySection[r.event_id] || {});
+  (ev[r.section_group] = ev[r.section_group] || []).push(toCad(r));
+}
+
+const today = new Date().toISOString().slice(0, 10);
+const games = Object.entries(byEvent).map(([id, snaps]) => {
+  const meta = snaps[snaps.length - 1];
+  const sections = {};
+  for (const [grp, ss] of Object.entries(bySection[id] || {})) {
+    sections[grp] = summarize(ss);
+  }
+  return {
+    event_id: id, game_date: meta.game_date, game_time: meta.game_time,
+    opponent: meta.opponent, overall: summarize(snaps), sections,
+  };
+}).filter(g => g.game_date >= today)
+  .sort((a, b) => (a.game_date + a.game_time).localeCompare(b.game_date + b.game_time));
+
+// sort section groups by typical price so dropdown + breakdowns read cheap → pricey
+const groupOrder = [...allGroups].sort((a, b) => {
+  const med = grp => {
+    const v = games.map(g => g.sections[grp]?.cur).filter(Boolean).sort((x, y) => x - y);
+    return v.length ? v[Math.floor(v.length / 2)] : 1e12;
+  };
+  return med(a) - med(b);
+});
+const sel = document.getElementById('sectionSel');
+for (const grp of groupOrder) {
+  const o = document.createElement('option');
+  o.value = o.textContent = grp;
+  sel.appendChild(o);
+}
+
+const lastCheck = PRICE_HISTORY.length
+  ? PRICE_HISTORY[PRICE_HISTORY.length - 1].checked_at.replace('T', ' ').slice(0, 16) : 'never';
+document.getElementById('updated').textContent =
+  `${games.length} upcoming home games · last price check: ${lastCheck}`;
+
+function spark(series, w = 90, h = 26) {
+  const pts = series.filter(p => p > 0);
+  if (pts.length < 2) return '<span class="low">need more checks</span>';
+  const min = Math.min(...pts), max = Math.max(...pts), span = max - min || 1;
+  const step = w / (pts.length - 1);
+  const path = pts.map((p, i) =>
+    `${i ? 'L' : 'M'}${(i * step).toFixed(1)},${(h - 3 - (p - min) / span * (h - 6)).toFixed(1)}`).join('');
+  const lastUp = pts[pts.length - 1] >= pts[0];
+  return `<svg class="spark" width="${w}" height="${h}"><path d="${path}" fill="none"
+    stroke="${lastUp ? '#c0392b' : '#0c8a3e'}" stroke-width="1.6"/></svg>`;
+}
+
+function deltaHtml(cur, prev) {
+  if (!prev || !cur) return '<span class="delta-flat">—</span>';
+  if (cur === prev) return '<span class="delta-flat">no change</span>';
+  const diff = cur - prev;
+  return `<span class="${diff < 0 ? 'delta-drop' : 'delta-rise'}">${diff < 0 ? '▼' : '▲'} ${fmt(Math.abs(diff))}</span>`;
+}
+
+let sectionView = 'all';
+let current = 'all';
+const view = g => sectionView === 'all' ? g.overall
+  : (g.sections[sectionView] || { cur: 0, prev: null, low: 0, high: 0, series: [], checks: 0, prefee: 0, buy_url: '' });
+const targetKey = (g, grp) => grp === 'all' ? g.event_id : g.event_id + '|' + grp;
+
+const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function render() {
+  const tbody = document.getElementById('rows');
+  const weekCutoff = new Date(Date.now() + 7 * 864e5).toISOString().slice(0, 10);
+  const shown = games.filter(g => {
+    const v = view(g), t = targets[targetKey(g, sectionView)];
+    if (current === 'week') return g.game_date <= weekCutoff;
+    if (current === 'target') return t && v.cur > 0 && v.cur <= t * 100;
+    if (current === 'drops') return v.prev && v.cur && v.cur < v.prev;
+    return true;
+  });
+  tbody.innerHTML = shown.length ? '' : '<tr><td colspan="9" class="empty">nothing matches this filter</td></tr>';
+  for (const g of shown) {
+    const v = view(g);
+    const t = targets[targetKey(g, sectionView)];
+    const hit = t && v.cur > 0 && v.cur <= t * 100;
+    const d = new Date(g.game_date + 'T12:00:00');
+    const hasSections = Object.keys(g.sections).length > 0;
+    const isOpen = expanded.has(g.event_id);
+    const tr = document.createElement('tr');
+    if (hit) tr.className = 'below-target';
+    tr.innerHTML = `
+      <td>${hasSections ? `<button class="expand" data-id="${g.event_id}">${isOpen ? '▾' : '▸'}</button>` : ''}</td>
+      <td><div class="game-date">${DOW[d.getDay()]} ${g.game_date.slice(5)}</div>
+          <div class="game-time">${g.game_time}</div></td>
+      <td>${g.opponent}${hit ? '<span class="badge">AT TARGET</span>' : ''}</td>
+      <td><div class="price">${v.cur ? fmt(v.cur) + ' <span class="prefee">CAD</span>' : '—'}</div>
+          <div class="prefee">${v.prefee ? fmt(v.prefee) + ' before fees' : ''}</div></td>
+      <td>${deltaHtml(v.cur, v.prev)}</td>
+      <td class="low"><b>${v.low ? fmt(v.low) : '—'}</b> / ${v.high ? fmt(v.high) : '—'}<br>${v.checks} checks</td>
+      <td>${spark(v.series)}</td>
+      <td><input class="target" type="number" min="1" placeholder="—"
+           value="${t || ''}" data-key="${targetKey(g, sectionView)}"></td>
+      <td>${v.buy_url ? `<a class="buy" href="${v.buy_url}" target="_blank">Buy</a>`
+                      : `<span class="low">${sectionView === 'all' ? 'not listed yet' : 'none in section'}</span>`}</td>`;
+    tbody.appendChild(tr);
+
+    if (isOpen && hasSections) {
+      const dtr = document.createElement('tr');
+      dtr.className = 'detail';
+      const rows = groupOrder.filter(grp => g.sections[grp]).map(grp => {
+        const s = g.sections[grp];
+        const st = targets[targetKey(g, grp)];
+        const sHit = st && s.cur > 0 && s.cur <= st * 100;
+        return `<tr ${sHit ? 'class="below-target"' : ''}>
+          <td>${grp}${sHit ? '<span class="badge">AT TARGET</span>' : ''}</td>
+          <td><span class="price">${s.cur ? fmt(s.cur) : '—'}</span>
+              <span class="prefee">${s.listings} listings</span></td>
+          <td>${deltaHtml(s.cur, s.prev)}</td>
+          <td class="low"><b>${s.low ? fmt(s.low) : '—'}</b> / ${s.high ? fmt(s.high) : '—'}</td>
+          <td>${spark(s.series, 70, 22)}</td>
+          <td><input class="target" type="number" min="1" placeholder="—"
+               value="${st || ''}" data-key="${targetKey(g, grp)}"></td>
+          <td>${s.buy_url ? `<a class="buy" href="${s.buy_url}" target="_blank">Buy</a>` : ''}</td>
+        </tr>`;
+      }).join('');
+      dtr.innerHTML = `<td colspan="9"><table class="sections">
+        <thead><tr><th>Section</th><th>Lowest now</th><th>Change</th><th>Low / high</th>
+        <th>Trend</th><th>Target $</th><th></th></tr></thead><tbody>${rows}</tbody></table></td>`;
+      tbody.appendChild(dtr);
+    }
+  }
+  tbody.querySelectorAll('button.expand').forEach(b => {
+    b.addEventListener('click', () => {
+      expanded.has(b.dataset.id) ? expanded.delete(b.dataset.id) : expanded.add(b.dataset.id);
+      render();
+    });
+  });
+  tbody.querySelectorAll('input.target').forEach(inp => {
+    inp.addEventListener('change', () => {
+      const v = parseFloat(inp.value);
+      if (v > 0) targets[inp.dataset.key] = v; else delete targets[inp.dataset.key];
+      localStorage.setItem('jaysTargets', JSON.stringify(targets));
+      render(); renderStats();
+    });
+  });
+}
+
+function renderStats() {
+  const priced = games.map(g => ({ g, v: view(g) })).filter(x => x.v.cur > 0);
+  const cheapest = priced.length
+    ? priced.reduce((a, b) => a.v.cur < b.v.cur ? a : b) : null;
+  const drops = priced.filter(x => x.v.prev && x.v.cur < x.v.prev).length;
+  const hits = priced.filter(x => {
+    const t = targets[targetKey(x.g, sectionView)];
+    return t && x.v.cur <= t * 100;
+  }).length;
+  const label = sectionView === 'all' ? 'any section' : sectionView;
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="n">${games.length}</div><div class="l">home games left</div></div>
+    <div class="stat"><div class="n">${cheapest ? fmt(cheapest.v.cur) : '—'}</div>
+      <div class="l">cheapest (${label}${cheapest ? ': ' + cheapest.g.opponent + ' ' + cheapest.g.game_date.slice(5) : ''})</div></div>
+    <div class="stat"><div class="n">${drops}</div><div class="l">prices dropped since last check</div></div>
+    <div class="stat"><div class="n">${hits}</div><div class="l">games at/below your target</div></div>`;
+}
+
+document.querySelectorAll('.controls button[data-filter]').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.controls button[data-filter]').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    current = b.dataset.filter;
+    render();
+  });
+});
+sel.addEventListener('change', () => { sectionView = sel.value; render(); renderStats(); });
+render(); renderStats();
+</script>
+</body>
+</html>

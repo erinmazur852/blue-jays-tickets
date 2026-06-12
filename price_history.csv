@@ -1,0 +1,91 @@
+checked_at,event_id,game_date,game_time,opponent,min_total_cents,min_prefee_cents,usd_cad_rate,buy_url
+2026-06-11T22:19:59-04:00,822803,2026-06-12,19:37,New York Yankees,4400,3700,1.3993,https://gametime.co/mlb-baseball/yankees-at-blue-jays-tickets/6-12-2026-toronto-on-rogers-centre/events/68af4f6aab077556743a9f72
+2026-06-11T22:19:59-04:00,822802,2026-06-13,15:07,New York Yankees,4000,3400,1.3993,https://gametime.co/mlb-baseball/yankees-at-blue-jays-tickets/6-13-2026-toronto-on-rogers-centre/events/68af4f6a613b50d0d600ed74
+2026-06-11T22:19:59-04:00,822801,2026-06-14,13:37,New York Yankees,4300,3600,1.3993,https://gametime.co/mlb-baseball/yankees-at-blue-jays-tickets/6-14-2026-toronto-on-rogers-centre/events/68af4f68f2def3b1e914a0bb
+2026-06-11T22:19:59-04:00,822800,2026-06-22,19:07,Houston Astros,2400,1900,1.3993,https://gametime.co/mlb-baseball/astros-at-blue-jays-tickets/6-22-2026-toronto-on-rogers-centre/events/68af4f676e994df60a6a1ea9
+2026-06-11T22:19:59-04:00,822799,2026-06-23,16:07,Houston Astros,2700,2200,1.3993,https://gametime.co/mlb-baseball/astros-at-blue-jays-tickets/6-23-2026-toronto-on-rogers-centre/events/68af4f67613b50d0d600ed72
+2026-06-11T22:19:59-04:00,822798,2026-06-24,19:07,Houston Astros,0,0,1.3993,
+2026-06-11T22:19:59-04:00,822797,2026-06-25,19:07,Texas Rangers,2700,2200,1.3993,https://gametime.co/mlb-baseball/rangers-at-blue-jays-tickets/6-25-2026-toronto-on-rogers-centre/events/68af4f67ab077556743a9f6e
+2026-06-11T22:19:59-04:00,822796,2026-06-26,19:07,Texas Rangers,4400,3700,1.3993,https://gametime.co/mlb-baseball/rangers-at-blue-jays-tickets/6-26-2026-toronto-on-rogers-centre/events/68af4f6960f33e20f906b845
+2026-06-11T22:19:59-04:00,822794,2026-06-27,15:07,Texas Rangers,4800,4000,1.3993,https://gametime.co/mlb-baseball/rangers-at-blue-jays-tickets/6-27-2026-toronto-on-rogers-centre/events/68af4f69561870a68b98923e
+2026-06-11T22:19:59-04:00,822795,2026-06-28,13:37,Texas Rangers,5200,4400,1.3993,https://gametime.co/mlb-baseball/rangers-at-blue-jays-tickets/6-28-2026-toronto-on-rogers-centre/events/68af4f692b923320a728e75f
+2026-06-11T22:19:59-04:00,822792,2026-06-29,19:07,New York Mets,3600,3000,1.3993,https://gametime.co/mlb-baseball/mets-at-blue-jays-tickets/6-29-2026-toronto-on-rogers-centre/events/68af4f67486ac15b7e7f7058
+2026-06-11T22:19:59-04:00,822793,2026-06-30,19:07,New York Mets,5000,4300,1.3993,https://gametime.co/mlb-baseball/mets-at-blue-jays-tickets/6-30-2026-toronto-on-rogers-centre/events/68af4f67bbe8a1f1686b546a
+2026-06-11T22:19:59-04:00,822791,2026-07-01,15:07,New York Mets,0,0,1.3993,
+2026-06-11T22:19:59-04:00,822789,2026-07-17,19:15,Chicago White Sox,4100,3400,1.3993,https://gametime.co/mlb-baseball/white-sox-at-blue-jays-tickets/7-17-2026-toronto-on-rogers-centre/events/68af4f68bbe8a1f1686b546b
+2026-06-11T22:19:59-04:00,822790,2026-07-18,15:07,Chicago White Sox,0,0,1.3993,
+2026-06-11T22:19:59-04:00,822786,2026-07-19,12:15,Chicago White Sox,5000,4200,1.3993,https://gametime.co/mlb-baseball/white-sox-at-blue-jays-tickets/7-19-2026-toronto-on-rogers-centre/events/68af4f6abbe8a1f1686b5472
+2026-06-11T22:19:59-04:00,822788,2026-07-20,19:07,Tampa Bay Rays,3300,2700,1.3993,https://gametime.co/mlb-baseball/rays-at-blue-jays-tickets/7-20-2026-toronto-on-rogers-centre/events/68af4f6a486ac15b7e7f705d
+2026-06-11T22:19:59-04:00,822787,2026-07-21,19:07,Tampa Bay Rays,3200,2700,1.3993,https://gametime.co/mlb-baseball/rays-at-blue-jays-tickets/7-21-2026-toronto-on-rogers-centre/events/68af4f6a486ac15b7e7f705c
+2026-06-11T22:19:59-04:00,822784,2026-07-22,19:07,Tampa Bay Rays,2800,2300,1.3993,https://gametime.co/mlb-baseball/rays-at-blue-jays-tickets/7-22-2026-toronto-on-rogers-centre/events/68af4f6abbe8a1f1686b5471
+2026-06-11T22:19:59-04:00,822785,2026-07-23,15:07,Tampa Bay Rays,4400,3700,1.3993,https://gametime.co/mlb-baseball/rays-at-blue-jays-tickets/7-23-2026-toronto-on-rogers-centre/events/68af4f69515a42e3057fd6fe
+2026-06-11T22:19:59-04:00,822782,2026-07-31,19:07,St. Louis Cardinals,3700,3000,1.3993,https://gametime.co/mlb-baseball/cardinals-at-blue-jays-tickets/7-31-2026-toronto-on-rogers-centre/events/68af4f69a87c28317e965ebc
+2026-06-11T22:19:59-04:00,822781,2026-08-01,15:07,St. Louis Cardinals,4400,3700,1.3993,https://gametime.co/mlb-baseball/cardinals-at-blue-jays-tickets/8-1-2026-toronto-on-rogers-centre/events/68af4f693edac2b884b8be71
+2026-06-11T22:19:59-04:00,822783,2026-08-02,13:37,St. Louis Cardinals,4700,3900,1.3993,https://gametime.co/mlb-baseball/cardinals-at-blue-jays-tickets/8-2-2026-toronto-on-rogers-centre/events/68af4f69ceb30d39d5ba181d
+2026-06-11T22:19:59-04:00,822780,2026-08-10,19:07,Boston Red Sox,0,0,1.3993,
+2026-06-11T22:19:59-04:00,822778,2026-08-11,19:07,Boston Red Sox,3900,3300,1.3993,https://gametime.co/mlb-baseball/red-sox-at-blue-jays-tickets/8-11-2026-toronto-on-rogers-centre/events/68af4f670322779c79d27144
+2026-06-11T22:19:59-04:00,822779,2026-08-12,19:07,Boston Red Sox,3700,3000,1.3993,https://gametime.co/mlb-baseball/red-sox-at-blue-jays-tickets/8-12-2026-toronto-on-rogers-centre/events/68af4f67134a3cce602c9942
+2026-06-11T22:19:59-04:00,822776,2026-08-13,15:07,Boston Red Sox,4300,3600,1.3993,https://gametime.co/mlb-baseball/red-sox-at-blue-jays-tickets/8-13-2026-toronto-on-rogers-centre/events/68af4f67630aca5171775681
+2026-06-11T22:19:59-04:00,822777,2026-08-14,19:07,New York Yankees,6000,5100,1.3993,https://gametime.co/mlb-baseball/yankees-at-blue-jays-tickets/8-14-2026-toronto-on-rogers-centre/events/68af4f69f2def3b1e914a0be
+2026-06-11T22:19:59-04:00,822775,2026-08-15,15:07,New York Yankees,7200,6100,1.3993,https://gametime.co/mlb-baseball/yankees-at-blue-jays-tickets/8-15-2026-toronto-on-rogers-centre/events/68af4f6961f7e1fa25848ab9
+2026-06-11T22:19:59-04:00,822774,2026-08-16,13:37,New York Yankees,6900,5800,1.3993,https://gametime.co/mlb-baseball/yankees-at-blue-jays-tickets/8-16-2026-toronto-on-rogers-centre/events/68af4f68aa4e560883783099
+2026-06-11T22:19:59-04:00,822773,2026-08-25,19:07,Kansas City Royals,2400,2000,1.3993,https://gametime.co/mlb-baseball/royals-at-blue-jays-tickets/8-25-2026-toronto-on-rogers-centre/events/68af4f67afd35e5e7d64fe67
+2026-06-11T22:19:59-04:00,822772,2026-08-26,19:07,Kansas City Royals,2000,1600,1.3993,https://gametime.co/mlb-baseball/royals-at-blue-jays-tickets/8-26-2026-toronto-on-rogers-centre/events/68af4f67f2def3b1e914a0ba
+2026-06-11T22:19:59-04:00,822771,2026-08-27,19:07,Kansas City Royals,2300,1800,1.3993,https://gametime.co/mlb-baseball/royals-at-blue-jays-tickets/8-27-2026-toronto-on-rogers-centre/events/68af4f68b645abdd501f0a46
+2026-06-11T22:19:59-04:00,822769,2026-08-28,19:07,Seattle Mariners,3900,3300,1.3993,https://gametime.co/mlb-baseball/mariners-at-blue-jays-tickets/8-28-2026-toronto-on-rogers-centre/events/68af4f6a0dcf1d7f796e5c85
+2026-06-11T22:19:59-04:00,822770,2026-08-29,15:07,Seattle Mariners,4900,4000,1.3993,https://gametime.co/mlb-baseball/mariners-at-blue-jays-tickets/8-29-2026-toronto-on-rogers-centre/events/68af4f6a1ca2cb21ee10d355
+2026-06-11T22:19:59-04:00,822766,2026-08-30,13:37,Seattle Mariners,3800,3000,1.3993,https://gametime.co/mlb-baseball/mariners-at-blue-jays-tickets/8-30-2026-toronto-on-rogers-centre/events/68af4f6a504ca5fba8a2b0aa
+2026-06-11T22:19:59-04:00,822767,2026-09-11,19:07,Baltimore Orioles,0,0,1.3993,
+2026-06-11T22:19:59-04:00,822768,2026-09-12,15:07,Baltimore Orioles,4100,3500,1.3993,https://gametime.co/mlb-baseball/orioles-at-blue-jays-tickets/9-12-2026-toronto-on-rogers-centre/events/68af4f6874310d5e52b010a2
+2026-06-11T22:19:59-04:00,822764,2026-09-13,13:37,Baltimore Orioles,3000,2500,1.3993,https://gametime.co/mlb-baseball/orioles-at-blue-jays-tickets/9-13-2026-toronto-on-rogers-centre/events/68af4f68f81960799e88fc66
+2026-06-11T22:19:59-04:00,822765,2026-09-14,19:07,Detroit Tigers,2200,1800,1.3993,https://gametime.co/mlb-baseball/tigers-at-blue-jays-tickets/9-14-2026-toronto-on-rogers-centre/events/68af4f68df4544316a7609b4
+2026-06-11T22:19:59-04:00,822762,2026-09-15,19:07,Detroit Tigers,2500,2100,1.3993,https://gametime.co/mlb-baseball/tigers-at-blue-jays-tickets/9-15-2026-toronto-on-rogers-centre/events/68af4f6859c7d399737f24f0
+2026-06-11T22:19:59-04:00,822763,2026-09-16,15:07,Detroit Tigers,2400,2000,1.3993,https://gametime.co/mlb-baseball/tigers-at-blue-jays-tickets/9-16-2026-toronto-on-rogers-centre/events/68af4f68afd35e5e7d64fe6a
+2026-06-11T22:19:59-04:00,822760,2026-09-25,19:07,Cincinnati Reds,0,0,1.3993,
+2026-06-11T22:19:59-04:00,822759,2026-09-26,15:07,Cincinnati Reds,3300,2800,1.3993,https://gametime.co/mlb-baseball/reds-at-blue-jays-tickets/9-26-2026-toronto-on-rogers-centre/events/68af4f6759c7d399737f24ef
+2026-06-11T22:19:59-04:00,822761,2026-09-27,15:07,Cincinnati Reds,3000,2400,1.3993,https://gametime.co/mlb-baseball/reds-at-blue-jays-tickets/9-27-2026-toronto-on-rogers-centre/events/68af4f6861f7e1fa25848ab8
+2026-06-11T22:31:58-04:00,822803,2026-06-12,19:37,New York Yankees,4400,3700,1.3993,https://gametime.co/mlb-baseball/yankees-at-blue-jays-tickets/6-12-2026-toronto-on-rogers-centre/events/68af4f6aab077556743a9f72
+2026-06-11T22:31:58-04:00,822802,2026-06-13,15:07,New York Yankees,4000,3400,1.3993,https://gametime.co/mlb-baseball/yankees-at-blue-jays-tickets/6-13-2026-toronto-on-rogers-centre/events/68af4f6a613b50d0d600ed74
+2026-06-11T22:31:58-04:00,822801,2026-06-14,13:37,New York Yankees,4300,3600,1.3993,https://gametime.co/mlb-baseball/yankees-at-blue-jays-tickets/6-14-2026-toronto-on-rogers-centre/events/68af4f68f2def3b1e914a0bb
+2026-06-11T22:31:58-04:00,822800,2026-06-22,19:07,Houston Astros,2400,1900,1.3993,https://gametime.co/mlb-baseball/astros-at-blue-jays-tickets/6-22-2026-toronto-on-rogers-centre/events/68af4f676e994df60a6a1ea9
+2026-06-11T22:31:58-04:00,822799,2026-06-23,16:07,Houston Astros,2700,2200,1.3993,https://gametime.co/mlb-baseball/astros-at-blue-jays-tickets/6-23-2026-toronto-on-rogers-centre/events/68af4f67613b50d0d600ed72
+2026-06-11T22:31:58-04:00,822798,2026-06-24,19:07,Houston Astros,0,0,1.3993,
+2026-06-11T22:31:58-04:00,822797,2026-06-25,19:07,Texas Rangers,2700,2200,1.3993,https://gametime.co/mlb-baseball/rangers-at-blue-jays-tickets/6-25-2026-toronto-on-rogers-centre/events/68af4f67ab077556743a9f6e
+2026-06-11T22:31:58-04:00,822796,2026-06-26,19:07,Texas Rangers,4400,3700,1.3993,https://gametime.co/mlb-baseball/rangers-at-blue-jays-tickets/6-26-2026-toronto-on-rogers-centre/events/68af4f6960f33e20f906b845
+2026-06-11T22:31:58-04:00,822794,2026-06-27,15:07,Texas Rangers,4800,4000,1.3993,https://gametime.co/mlb-baseball/rangers-at-blue-jays-tickets/6-27-2026-toronto-on-rogers-centre/events/68af4f69561870a68b98923e
+2026-06-11T22:31:58-04:00,822795,2026-06-28,13:37,Texas Rangers,5200,4400,1.3993,https://gametime.co/mlb-baseball/rangers-at-blue-jays-tickets/6-28-2026-toronto-on-rogers-centre/events/68af4f692b923320a728e75f
+2026-06-11T22:31:58-04:00,822792,2026-06-29,19:07,New York Mets,3600,3000,1.3993,https://gametime.co/mlb-baseball/mets-at-blue-jays-tickets/6-29-2026-toronto-on-rogers-centre/events/68af4f67486ac15b7e7f7058
+2026-06-11T22:31:58-04:00,822793,2026-06-30,19:07,New York Mets,5000,4300,1.3993,https://gametime.co/mlb-baseball/mets-at-blue-jays-tickets/6-30-2026-toronto-on-rogers-centre/events/68af4f67bbe8a1f1686b546a
+2026-06-11T22:31:58-04:00,822791,2026-07-01,15:07,New York Mets,0,0,1.3993,
+2026-06-11T22:31:58-04:00,822789,2026-07-17,19:15,Chicago White Sox,4100,3400,1.3993,https://gametime.co/mlb-baseball/white-sox-at-blue-jays-tickets/7-17-2026-toronto-on-rogers-centre/events/68af4f68bbe8a1f1686b546b
+2026-06-11T22:31:58-04:00,822790,2026-07-18,15:07,Chicago White Sox,0,0,1.3993,
+2026-06-11T22:31:58-04:00,822786,2026-07-19,12:15,Chicago White Sox,5000,4200,1.3993,https://gametime.co/mlb-baseball/white-sox-at-blue-jays-tickets/7-19-2026-toronto-on-rogers-centre/events/68af4f6abbe8a1f1686b5472
+2026-06-11T22:31:58-04:00,822788,2026-07-20,19:07,Tampa Bay Rays,3300,2700,1.3993,https://gametime.co/mlb-baseball/rays-at-blue-jays-tickets/7-20-2026-toronto-on-rogers-centre/events/68af4f6a486ac15b7e7f705d
+2026-06-11T22:31:58-04:00,822787,2026-07-21,19:07,Tampa Bay Rays,3200,2700,1.3993,https://gametime.co/mlb-baseball/rays-at-blue-jays-tickets/7-21-2026-toronto-on-rogers-centre/events/68af4f6a486ac15b7e7f705c
+2026-06-11T22:31:58-04:00,822784,2026-07-22,19:07,Tampa Bay Rays,2800,2300,1.3993,https://gametime.co/mlb-baseball/rays-at-blue-jays-tickets/7-22-2026-toronto-on-rogers-centre/events/68af4f6abbe8a1f1686b5471
+2026-06-11T22:31:58-04:00,822785,2026-07-23,15:07,Tampa Bay Rays,4400,3700,1.3993,https://gametime.co/mlb-baseball/rays-at-blue-jays-tickets/7-23-2026-toronto-on-rogers-centre/events/68af4f69515a42e3057fd6fe
+2026-06-11T22:31:58-04:00,822782,2026-07-31,19:07,St. Louis Cardinals,3700,3000,1.3993,https://gametime.co/mlb-baseball/cardinals-at-blue-jays-tickets/7-31-2026-toronto-on-rogers-centre/events/68af4f69a87c28317e965ebc
+2026-06-11T22:31:58-04:00,822781,2026-08-01,15:07,St. Louis Cardinals,4400,3700,1.3993,https://gametime.co/mlb-baseball/cardinals-at-blue-jays-tickets/8-1-2026-toronto-on-rogers-centre/events/68af4f693edac2b884b8be71
+2026-06-11T22:31:58-04:00,822783,2026-08-02,13:37,St. Louis Cardinals,4700,3900,1.3993,https://gametime.co/mlb-baseball/cardinals-at-blue-jays-tickets/8-2-2026-toronto-on-rogers-centre/events/68af4f69ceb30d39d5ba181d
+2026-06-11T22:31:58-04:00,822780,2026-08-10,19:07,Boston Red Sox,0,0,1.3993,
+2026-06-11T22:31:58-04:00,822778,2026-08-11,19:07,Boston Red Sox,3900,3300,1.3993,https://gametime.co/mlb-baseball/red-sox-at-blue-jays-tickets/8-11-2026-toronto-on-rogers-centre/events/68af4f670322779c79d27144
+2026-06-11T22:31:58-04:00,822779,2026-08-12,19:07,Boston Red Sox,3700,3000,1.3993,https://gametime.co/mlb-baseball/red-sox-at-blue-jays-tickets/8-12-2026-toronto-on-rogers-centre/events/68af4f67134a3cce602c9942
+2026-06-11T22:31:58-04:00,822776,2026-08-13,15:07,Boston Red Sox,4300,3600,1.3993,https://gametime.co/mlb-baseball/red-sox-at-blue-jays-tickets/8-13-2026-toronto-on-rogers-centre/events/68af4f67630aca5171775681
+2026-06-11T22:31:58-04:00,822777,2026-08-14,19:07,New York Yankees,6000,5100,1.3993,https://gametime.co/mlb-baseball/yankees-at-blue-jays-tickets/8-14-2026-toronto-on-rogers-centre/events/68af4f69f2def3b1e914a0be
+2026-06-11T22:31:58-04:00,822775,2026-08-15,15:07,New York Yankees,7200,6100,1.3993,https://gametime.co/mlb-baseball/yankees-at-blue-jays-tickets/8-15-2026-toronto-on-rogers-centre/events/68af4f6961f7e1fa25848ab9
+2026-06-11T22:31:58-04:00,822774,2026-08-16,13:37,New York Yankees,6900,5800,1.3993,https://gametime.co/mlb-baseball/yankees-at-blue-jays-tickets/8-16-2026-toronto-on-rogers-centre/events/68af4f68aa4e560883783099
+2026-06-11T22:31:58-04:00,822773,2026-08-25,19:07,Kansas City Royals,2400,2000,1.3993,https://gametime.co/mlb-baseball/royals-at-blue-jays-tickets/8-25-2026-toronto-on-rogers-centre/events/68af4f67afd35e5e7d64fe67
+2026-06-11T22:31:58-04:00,822772,2026-08-26,19:07,Kansas City Royals,2000,1600,1.3993,https://gametime.co/mlb-baseball/royals-at-blue-jays-tickets/8-26-2026-toronto-on-rogers-centre/events/68af4f67f2def3b1e914a0ba
+2026-06-11T22:31:58-04:00,822771,2026-08-27,19:07,Kansas City Royals,2300,1800,1.3993,https://gametime.co/mlb-baseball/royals-at-blue-jays-tickets/8-27-2026-toronto-on-rogers-centre/events/68af4f68b645abdd501f0a46
+2026-06-11T22:31:58-04:00,822769,2026-08-28,19:07,Seattle Mariners,3900,3300,1.3993,https://gametime.co/mlb-baseball/mariners-at-blue-jays-tickets/8-28-2026-toronto-on-rogers-centre/events/68af4f6a0dcf1d7f796e5c85
+2026-06-11T22:31:58-04:00,822770,2026-08-29,15:07,Seattle Mariners,4900,4000,1.3993,https://gametime.co/mlb-baseball/mariners-at-blue-jays-tickets/8-29-2026-toronto-on-rogers-centre/events/68af4f6a1ca2cb21ee10d355
+2026-06-11T22:31:58-04:00,822766,2026-08-30,13:37,Seattle Mariners,3800,3000,1.3993,https://gametime.co/mlb-baseball/mariners-at-blue-jays-tickets/8-30-2026-toronto-on-rogers-centre/events/68af4f6a504ca5fba8a2b0aa
+2026-06-11T22:31:58-04:00,822767,2026-09-11,19:07,Baltimore Orioles,0,0,1.3993,
+2026-06-11T22:31:58-04:00,822768,2026-09-12,15:07,Baltimore Orioles,4100,3500,1.3993,https://gametime.co/mlb-baseball/orioles-at-blue-jays-tickets/9-12-2026-toronto-on-rogers-centre/events/68af4f6874310d5e52b010a2
+2026-06-11T22:31:58-04:00,822764,2026-09-13,13:37,Baltimore Orioles,3000,2500,1.3993,https://gametime.co/mlb-baseball/orioles-at-blue-jays-tickets/9-13-2026-toronto-on-rogers-centre/events/68af4f68f81960799e88fc66
+2026-06-11T22:31:58-04:00,822765,2026-09-14,19:07,Detroit Tigers,2200,1800,1.3993,https://gametime.co/mlb-baseball/tigers-at-blue-jays-tickets/9-14-2026-toronto-on-rogers-centre/events/68af4f68df4544316a7609b4
+2026-06-11T22:31:58-04:00,822762,2026-09-15,19:07,Detroit Tigers,2500,2100,1.3993,https://gametime.co/mlb-baseball/tigers-at-blue-jays-tickets/9-15-2026-toronto-on-rogers-centre/events/68af4f6859c7d399737f24f0
+2026-06-11T22:31:58-04:00,822763,2026-09-16,15:07,Detroit Tigers,2400,2000,1.3993,https://gametime.co/mlb-baseball/tigers-at-blue-jays-tickets/9-16-2026-toronto-on-rogers-centre/events/68af4f68afd35e5e7d64fe6a
+2026-06-11T22:31:58-04:00,822760,2026-09-25,19:07,Cincinnati Reds,0,0,1.3993,
+2026-06-11T22:31:58-04:00,822759,2026-09-26,15:07,Cincinnati Reds,3300,2800,1.3993,https://gametime.co/mlb-baseball/reds-at-blue-jays-tickets/9-26-2026-toronto-on-rogers-centre/events/68af4f6759c7d399737f24ef
+2026-06-11T22:31:58-04:00,822761,2026-09-27,15:07,Cincinnati Reds,3000,2400,1.3993,https://gametime.co/mlb-baseball/reds-at-blue-jays-tickets/9-27-2026-toronto-on-rogers-centre/events/68af4f6861f7e1fa25848ab8
