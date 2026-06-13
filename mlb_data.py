@@ -24,13 +24,13 @@ SITE_DATA = os.path.join(DIR, "site_data.json")
 PRICE_HISTORY = os.path.join(DIR, "mlb_price_history.csv")
 
 STATS = "https://statsapi.mlb.com/api/v1"
-TM = "https://app.ticketmaster.com/discovery/v2"
-TM_KEY = os.environ.get("TM_API_KEY", "").strip()
+GAMETIME = "https://mobile.gametime.co/v1"
+VENUES_FILE = os.path.join(DIR, "gametime_venues.json")
 SEASON = 2026
-TZ_FALLBACK = "America/New_York"
 
+# Gametime prices every venue in USD; the public site shows USD.
 PRICE_FIELDS = ["checked_at", "game_pk", "home_slug", "date",
-                "min_cents", "max_cents", "currency", "source"]
+                "min_cents", "prefee_cents", "currency", "source"]
 
 
 def get_json(url):
@@ -86,57 +86,37 @@ def schedule(today):
     return games
 
 
-# ---- Ticketmaster price enrichment (optional) -----------------------------
+# ---- Gametime resale price layer ------------------------------------------
 
-def tm_get(path, **params):
-    params["apikey"] = TM_KEY
-    url = f"{TM}/{path}?{urllib.parse.urlencode(params)}"
+def gametime_prices(venue_id, team_name):
+    """{date -> (min_total_cents, min_prefee_cents, buy_url)} for a team's
+    home games, from that stadium's Gametime venue feed (USD)."""
+    url = f"{GAMETIME}/events?venue_id={venue_id}&per_page=100"
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     for attempt in range(3):
         try:
-            return get_json(url)
-        except Exception:
-            time.sleep(2 + attempt)
-    return {}
-
-
-def tm_prices_for_team(team):
-    """{date -> (min_cents, max_cents, currency)} for the team's home games."""
-    if not TM_KEY:
-        return {}
-    res = tm_get("attractions.json", keyword=team["name"],
-                 classificationName="baseball", size=5)
-    attractions = (res.get("_embedded") or {}).get("attractions") or []
-    aid = next((a["id"] for a in attractions
-                if slugify(a["name"]) == team["slug"]
-                or team["name"].endswith(a["name"])), None)
-    if not aid:
-        return {}
-    prices = {}
-    page = 0
-    while True:
-        ev = tm_get("events.json", attractionId=aid,
-                    classificationName="baseball", size=100, page=page,
-                    sort="date,asc")
-        events = (ev.get("_embedded") or {}).get("events") or []
-        for e in events:
-            name = e.get("name", "")
-            # home games only: "<Away> at <Home>" ending in our team
-            if " at " not in name or not name.endswith(team["name"].split()[-1]):
-                continue
-            date = (e.get("dates", {}).get("start", {}) or {}).get("localDate")
-            ranges = e.get("priceRanges") or []
-            if not date or not ranges:
-                continue
-            lo = min(r.get("min", 0) for r in ranges if r.get("min"))
-            hi = max(r.get("max", 0) for r in ranges if r.get("max"))
-            cur = ranges[0].get("currency", "USD")
-            if lo:
-                prices[date] = (round(lo * 100), round(hi * 100), cur)
-        page_info = ev.get("page", {})
-        if page + 1 >= page_info.get("totalPages", 1):
+            with urllib.request.urlopen(req, timeout=40) as r:
+                data = json.load(r)
             break
-        page += 1
-        time.sleep(0.25)
+        except Exception:
+            time.sleep(1.5 + attempt)
+    else:
+        return {}
+    last = team_name.split()[-1]
+    prices = {}
+    for item in data.get("events", []):
+        ev = item.get("event", item)
+        name = str(ev.get("name", ""))
+        if "Parking" in name or not name.endswith(f"at {team_name}") and last not in name:
+            continue
+        if " at " not in name:
+            continue
+        date = (ev.get("datetime_local") or "")[:10]
+        mp = ev.get("min_price") or {}
+        total = mp.get("total") or 0
+        if not date or total <= 0:
+            continue
+        prices[date] = (total, mp.get("prefee") or 0, ev.get("seo_url", ""))
     return prices
 
 
@@ -169,17 +149,22 @@ def main():
     tm = teams()
     games = schedule(today)
     prior = load_history()
+    venues = json.load(open(VENUES_FILE)) if os.path.exists(VENUES_FILE) else {}
 
-    # gather TM prices per team (only the teams that have home games left)
-    team_prices = {}
+    # gather Gametime prices per home venue (one call per team with games left)
     home_team_ids = {g["home_id"] for g in games}
-    if TM_KEY:
-        for tid in home_team_ids:
-            try:
-                team_prices[tid] = tm_prices_for_team(tm[tid])
-            except Exception:
-                team_prices[tid] = {}
-            time.sleep(0.25)
+    team_prices = {}
+    for tid in home_team_ids:
+        t = tm[tid]
+        vid = (venues.get(t["slug"]) or {}).get("venue_id")
+        if not vid:
+            team_prices[tid] = {}
+            continue
+        try:
+            team_prices[tid] = gametime_prices(vid, t["name"])
+        except Exception:
+            team_prices[tid] = {}
+        time.sleep(0.3)
 
     new_rows = []
     for g in games:
@@ -187,16 +172,17 @@ def main():
         p = team_prices.get(g["home_id"], {}).get(g["date"])
         g["home_slug"] = home["slug"]
         g["home_name"] = home["name"]
+        g["currency"] = "USD"
         if p:
-            g["min_cents"], g["max_cents"], g["currency"] = p
+            g["min_cents"], g["prefee_cents"], g["buy_url"] = p
             new_rows.append({
                 "checked_at": checked_at, "game_pk": g["game_pk"],
                 "home_slug": home["slug"], "date": g["date"],
-                "min_cents": p[0], "max_cents": p[1],
-                "currency": p[2], "source": "ticketmaster"})
+                "min_cents": p[0], "prefee_cents": p[1],
+                "currency": "USD", "source": "gametime"})
         else:
-            g["min_cents"] = g["max_cents"] = 0
-            g["currency"] = "USD"
+            g["min_cents"] = g["prefee_cents"] = 0
+            g["buy_url"] = ""
         # deal signal vs our own tracked low
         past = [int(r["min_cents"]) for r in prior.get(str(g["game_pk"]), [])
                 if int(r["min_cents"]) > 0]
@@ -208,7 +194,7 @@ def main():
 
     out = {
         "generated_at": checked_at,
-        "has_prices": bool(TM_KEY),
+        "has_prices": True,
         "teams": sorted(
             (t for t in tm.values() if t["id"] in home_team_ids),
             key=lambda t: t["name"]),
@@ -219,7 +205,7 @@ def main():
 
     priced = sum(1 for g in games if g["min_cents"])
     print(f"{checked_at}  {len(out['teams'])} teams, {len(games)} games, "
-          f"{priced} priced (TM key: {'yes' if TM_KEY else 'NO — schedule only'})")
+          f"{priced} priced via Gametime")
 
 
 if __name__ == "__main__":

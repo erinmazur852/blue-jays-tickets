@@ -1,0 +1,152 @@
+{
+ "athletics": {
+  "venue_id": "55313d1878fea568e6000001",
+  "venue": "Sutter Health Park",
+  "home_events_seen": 25
+ },
+ "pittsburgh-pirates": {
+  "venue_id": "538526c321efd33afb000002",
+  "venue": "PNC Park",
+  "home_events_seen": 16
+ },
+ "san-diego-padres": {
+  "venue_id": "53692f0a3bf3760f90000001",
+  "venue": "Petco Park",
+  "home_events_seen": 21
+ },
+ "seattle-mariners": {
+  "venue_id": "538526c321efd33afb000001",
+  "venue": "T-Mobile Park",
+  "home_events_seen": 21
+ },
+ "san-francisco-giants": {
+  "venue_id": "52618c753bf3760b9c000004",
+  "venue": "Oracle Park",
+  "home_events_seen": 20
+ },
+ "st-louis-cardinals": {
+  "venue_id": "54b5ab3b3bf3763f85000001",
+  "venue": "Busch Stadium",
+  "home_events_seen": 22
+ },
+ "tampa-bay-rays": {
+  "venue_id": "54dcf29564f9620805000003",
+  "venue": "Tropicana Field",
+  "home_events_seen": 28
+ },
+ "texas-rangers": {
+  "venue_id": "5d9f4ea483e7d2003a7aa81a",
+  "venue": "Globe Life Field",
+  "home_events_seen": 31
+ },
+ "toronto-blue-jays": {
+  "venue_id": "55116f6864f9625eb3000001",
+  "venue": "Rogers Centre",
+  "home_events_seen": 24
+ },
+ "minnesota-twins": {
+  "venue_id": "538526c321efd33afb000005",
+  "venue": "Target Field",
+  "home_events_seen": 25
+ },
+ "philadelphia-phillies": {
+  "venue_id": "539619523bf37601f6000001",
+  "venue": "Citizens Bank Park",
+  "home_events_seen": 28
+ },
+ "atlanta-braves": {
+  "venue_id": "5876a1f7cde6626ebe0d3e87",
+  "venue": "Truist Park",
+  "home_events_seen": 33
+ },
+ "chicago-white-sox": {
+  "venue_id": "5362ccf73bf37627c6000004",
+  "venue": "Guaranteed Rate Field",
+  "home_events_seen": 20
+ },
+ "miami-marlins": {
+  "venue_id": "53acb8a23bf3760237000004",
+  "venue": "loanDepot park",
+  "home_events_seen": 25
+ },
+ "new-york-yankees": {
+  "venue_id": "5362ccf73bf37627c6000003",
+  "venue": "Yankee Stadium",
+  "home_events_seen": 14
+ },
+ "milwaukee-brewers": {
+  "venue_id": "538526c321efd33afb000003",
+  "venue": "American Family Field",
+  "home_events_seen": 31
+ },
+ "los-angeles-angels": {
+  "venue_id": "533d97153bf3766542000001",
+  "venue": "Angel Stadium of Anaheim",
+  "home_events_seen": 24
+ },
+ "arizona-diamondbacks": {
+  "venue_id": "538526c421efd33afb000006",
+  "venue": "Chase Field",
+  "home_events_seen": 30
+ },
+ "baltimore-orioles": {
+  "venue_id": "53bb068c3bf37624c3000004",
+  "venue": "Oriole Park at Camden Yards",
+  "home_events_seen": 16
+ },
+ "boston-red-sox": {
+  "venue_id": "5362ccf73bf37627c6000001",
+  "venue": "Fenway Park",
+  "home_events_seen": 31
+ },
+ "chicago-cubs": {
+  "venue_id": "533d97153bf3766542000002",
+  "venue": "Wrigley Field",
+  "home_events_seen": 28
+ },
+ "cincinnati-reds": {
+  "venue_id": "53beec013bf376503f000001",
+  "venue": "Great American Ball Park",
+  "home_events_seen": 24
+ },
+ "cleveland-guardians": {
+  "venue_id": "53beec013bf376503f000002",
+  "venue": "Progressive Field",
+  "home_events_seen": 19
+ },
+ "colorado-rockies": {
+  "venue_id": "53acb8a23bf3760237000006",
+  "venue": "Coors Field",
+  "home_events_seen": 25
+ },
+ "detroit-tigers": {
+  "venue_id": "53c03a3b3bf37612c4000002",
+  "venue": "Comerica Park",
+  "home_events_seen": 29
+ },
+ "houston-astros": {
+  "venue_id": "53b30c243bf37646fb000002",
+  "venue": "Daikin Park",
+  "home_events_seen": 31
+ },
+ "kansas-city-royals": {
+  "venue_id": "538526c321efd33afb000004",
+  "venue": "Kauffman Stadium",
+  "home_events_seen": 14
+ },
+ "los-angeles-dodgers": {
+  "venue_id": "5333a2763bf3767900000001",
+  "venue": "UNIQLO Field at Dodger Stadium",
+  "home_events_seen": 26
+ },
+ "washington-nationals": {
+  "venue_id": "5388f0613bf3761afd000002",
+  "venue": "Nationals Park",
+  "home_events_seen": 19
+ },
+ "new-york-mets": {
+  "venue_id": "5362ccf73bf37627c6000002",
+  "venue": "Citi Field",
+  "home_events_seen": 10
+ }
+}

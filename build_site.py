@@ -36,8 +36,11 @@ def fmt_dt(iso):
 
 
 def buy_url(g):
-    """Marketplace deep link. Swap to affiliate-tracked links post-approval —
+    """Marketplace deep link — the real Gametime listing when we have one,
+    else a search fallback. Swap to affiliate-tracked links post-approval;
     this is the single place to change."""
+    if g.get("buy_url"):
+        return g["buy_url"]
     import urllib.parse
     q = urllib.parse.quote_plus(f"{g['away_name']} at {g['home_name']}")
     return f"https://www.vividseats.com/search?searchTerm={q}"
