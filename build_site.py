@@ -43,6 +43,10 @@ def buy_url(g):
     return f"https://www.vividseats.com/search?searchTerm={q}"
 
 
+MARK_SVG = ('<svg viewBox="0 0 64 64" fill="none"><polyline points="8,16 24,34 32,26 44,38 56,10" '
+            'stroke="#0a1f3c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>'
+            '<circle cx="44" cy="38" r="5" fill="#fff" stroke="#0a1f3c" stroke-width="4"/></svg>')
+
 SHELL = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,47 +60,31 @@ SHELL = """<!DOCTYPE html>
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{canonical}">
+<meta name="theme-color" content="#0a1f3c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="/seatdip.css">
 {schema}
-<style>
-  :root{{--navy:#134a8e;--green:#0c8a3e;--bg:#f5f7fa;--card:#fff;--text:#1a2233;--muted:#6b7585}}
-  *{{box-sizing:border-box}}
-  body{{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.5}}
-  a{{color:var(--navy);text-decoration:none}}
-  a:hover{{text-decoration:underline}}
-  header{{background:var(--navy);color:#fff;padding:14px 20px}}
-  header a{{color:#fff}}
-  header .brand{{font-weight:800;font-size:18px}}
-  header .brand b{{color:#4ade80}}
-  .wrap{{max-width:1000px;margin:0 auto;padding:20px}}
-  h1{{font-size:24px;margin:.2em 0}}
-  h2{{font-size:17px;margin-top:28px}}
-  .sub{{color:var(--muted);font-size:14px}}
-  .crumb{{font-size:13px;color:var(--muted);margin-bottom:6px}}
-  .grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:14px}}
-  .card{{background:var(--card);border:1px solid #e6eaf0;border-radius:10px;padding:12px 14px;display:block}}
-  .card .t{{font-weight:600}}
-  .card .m{{color:var(--muted);font-size:13px}}
-  table{{width:100%;border-collapse:collapse;background:var(--card);border-radius:10px;overflow:hidden;border:1px solid #e6eaf0;margin-top:12px}}
-  th{{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);padding:9px 12px;background:#fafbfd;border-bottom:2px solid #e6eaf0}}
-  td{{padding:9px 12px;border-bottom:1px solid #eef1f5;font-size:14px}}
-  tr:last-child td{{border-bottom:none}}
-  .price{{font-weight:700}}
-  .deal{{display:inline-block;background:var(--green);color:#fff;font-size:11px;padding:2px 7px;border-radius:5px}}
-  .cta{{display:inline-block;background:#e8291c;color:#fff;padding:10px 18px;border-radius:8px;font-weight:700;margin-top:8px}}
-  .cta:hover{{text-decoration:none;filter:brightness(1.08)}}
-  .box{{background:var(--card);border:1px solid #e6eaf0;border-radius:10px;padding:16px;margin-top:14px}}
-  footer{{max-width:1000px;margin:30px auto;padding:0 20px;color:var(--muted);font-size:12px}}
-</style>
 </head>
 <body>
-<header><div class="wrap" style="padding:0"><a href="/" class="brand">Seat<b>Dip</b></a></div></header>
+<header class="site-header"><div class="inner">
+  <a href="/" class="brand"><span class="mark">{mark}</span>Seat<b>Dip</b>
+  <span class="tag">ticket price tracker</span></a>
+</div></header>
 <div class="wrap">
 {body}
 </div>
-<footer>
+<footer class="site-footer">
 <a href="/">Home</a> · <a href="/about.html">About</a> · <a href="/privacy.html">Privacy</a><br>
 SeatDip is an independent fan project, not affiliated with MLB or any team or marketplace. Buy links may be affiliate links. Prices shown are indicative and set by the marketplace at checkout.
 </footer>
+<script>
+/* reveal-on-scroll, progressive enhancement only */
+(function(){{var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver'in window)){{els.forEach(function(e){{e.classList.add('in')}});return}}
+var io=new IntersectionObserver(function(es){{es.forEach(function(en){{if(en.isIntersecting){{en.target.classList.add('in');io.unobserve(en.target)}}}})}},{{rootMargin:'0px 0px -8% 0px'}});
+els.forEach(function(e){{io.observe(e)}});}})();
+</script>
 </body>
 </html>
 """
@@ -112,7 +100,7 @@ def write(path, content):
 def page(path, title, desc, body, schema=""):
     canonical = f"{BASE_URL}/{path}".replace("/index.html", "/")
     write(path, SHELL.format(title=e(title), desc=e(desc), canonical=e(canonical),
-                             schema=schema, body=body))
+                             schema=schema, body=body, mark=MARK_SVG))
 
 
 def build(data):
@@ -124,6 +112,9 @@ def build(data):
         src = os.path.join(DIR, asset)
         if os.path.exists(src):
             shutil.copy(src, os.path.join(SITE, asset))
+    css = os.path.join(DIR, "assets", "seatdip.css")
+    if os.path.exists(css):
+        shutil.copy(css, os.path.join(SITE, "seatdip.css"))
     # the rich section-level Jays tracker ships at /jays.html
     jays_src = os.path.join(DIR, "index.html")
     if os.path.exists(jays_src):
@@ -137,17 +128,25 @@ def build(data):
 
     # ---- home / index ----
     cards = "".join(
-        f'<a class="card" href="/team/{e(t["slug"])}/">'
-        f'<div class="t">{e(t["name"])}</div>'
-        f'<div class="m">{len(by_team.get(t["slug"], []))} home games · {e(t["venue"])}</div></a>'
+        f'<a class="team-card reveal" href="/team/{e(t["slug"])}/">'
+        f'<div class="name">{e(t["name"])}</div>'
+        f'<div class="meta">{len(by_team.get(t["slug"], []))} home games · {e(t["venue"])}</div>'
+        f'<span class="div">{e(t["division"])}</span></a>'
         for t in teams)
-    body = f"""<h1>MLB ticket prices &amp; price history</h1>
-<p class="sub">Track the lowest resale price for every MLB home game, see whether
-today's price is a real deal against its own history, and get to the cheapest
-listing fast. Pick your team.</p>
-<div class="box">🔥 <b>Blue Jays fans:</b> try the
+    ticker = ('<svg class="ticker" viewBox="0 0 200 80" fill="none">'
+              '<path d="M4,30 L40,52 L70,40 L110,64 L150,20 L196,8" stroke="#5cf2a0" '
+              'stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>'
+              '<circle cx="110" cy="64" r="5.5" fill="#fff"/></svg>')
+    body = f"""<div class="hero">
+  <h1>Catch the <span class="pop">dip</span>.<br>MLB ticket prices, tracked.</h1>
+  <p>We watch the lowest price for every MLB home game and keep its history, so
+  you can tell a real deal from a fake one — then jump straight to the cheapest seats.</p>
+  {ticker}
+</div>
+<div class="box promo reveal">🔥 <b>Blue Jays fans:</b> try the
 <a href="/jays.html">section-by-section live price tracker</a> — every Rogers
 Centre section, price-drop history, and your own target alerts.</div>
+<div class="section-title">Pick your team</div>
 <div class="grid">{cards}</div>"""
     page("index.html", "SeatDip — MLB Ticket Prices & Price History by Team",
          "Compare ticket prices and price history for every MLB team's home games. "
@@ -161,22 +160,25 @@ Centre section, price-drop history, and your own target alerts.</div>
         for g in tg:
             _, datestr, timestr = fmt_dt(g["datetime_utc"])
             price = money(g["min_cents"], g["currency"])
-            deal = '<span class="deal">tracked low</span>' if (
+            deal = '<span class="badge deal">▼ tracked low</span>' if (
                 g["min_cents"] and g["tracked_low"] and g["min_cents"] <= g["tracked_low"]) else ""
+            pcell = (f'<span class="price">{price}</span> {deal}'
+                     if price else '<span class="price none">tracking…</span>')
             rows.append(
-                f'<tr><td><a href="/game/{g["game_pk"]}/">{e(g["away_name"])}</a></td>'
-                f'<td>{datestr}<br><span class="sub">{timestr}</span></td>'
-                f'<td class="price">{price or "—"} {deal}</td></tr>')
-        table = ("<table><thead><tr><th>Opponent</th><th>Date</th>"
-                 "<th>From</th></tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
+                f'<tr><td class="opp"><a href="/game/{g["game_pk"]}/">{e(g["away_name"])}</a></td>'
+                f'<td>{datestr}<br><span style="color:var(--muted);font-size:12px">{timestr}</span></td>'
+                f'<td>{pcell}</td></tr>')
+        table = ('<div class="table-wrap"><table><thead><tr><th>Opponent</th>'
+                 '<th>Date</th><th>From</th></tr></thead><tbody>'
+                 + "".join(rows) + "</tbody></table></div>"
                  ) if rows else "<p>No upcoming home games.</p>"
-        jays_promo = ('<div class="box">🔥 Try the '
+        jays_promo = ('<div class="box promo reveal">🔥 Try the '
                       '<a href="/jays.html">section-by-section live tracker</a> '
                       'for every Rogers Centre section, with price-drop history '
                       'and target-price alerts.</div>') if t["slug"] == "toronto-blue-jays" else ""
         body = f"""<div class="crumb"><a href="/">MLB</a> › {e(t["name"])}</div>
 <h1>{e(t["name"])} tickets</h1>
-<p class="sub">{len(tg)} upcoming home games at {e(t["venue"])}, {e(t["location"])}.
+<p style="color:var(--muted);max-width:640px">{len(tg)} upcoming home games at {e(t["venue"])}, {e(t["location"])}.
 Lowest prices and price history below — click a game for detail and the
 cheapest listing.</p>
 {jays_promo}
@@ -195,12 +197,17 @@ cheapest listing.</p>
         price = money(g["min_cents"], g["currency"])
         deal = (g["min_cents"] and g["tracked_low"]
                 and g["min_cents"] <= g["tracked_low"])
-        price_block = (
-            f'<p class="price" style="font-size:22px">From {price}'
-            + (' <span class="deal">lowest we\'ve tracked</span>' if deal else '')
-            + '</p>') if price else (
-            '<p class="sub">Live price tracking for this game is starting. '
-            'Check back, or grab the current listing below.</p>')
+        cur = g["currency"]
+        if price:
+            amt = f"{g['min_cents']/100:,.0f}"
+            price_block = (
+                f'<div class="price-hero">${amt}<span class="cur"> {cur} from</span></div>'
+                + ('<div style="margin-top:10px"><span class="badge deal">▼ lowest we\'ve tracked</span></div>'
+                   if deal else ''))
+        else:
+            price_block = ('<div class="price-hero" style="font-size:26px">Tracking…</div>'
+                           '<p class="price-sub">We\'re pulling live prices for this game. '
+                           'Check back soon, or grab the current listing below.</p>')
         offers = (f',"offers":{{"@type":"AggregateOffer","lowPrice":'
                   f'{g["min_cents"]/100:.2f},"priceCurrency":"{g["currency"]}",'
                   f'"availability":"https://schema.org/InStock",'
@@ -213,17 +220,26 @@ cheapest listing.</p>
                   f'"homeTeam":{{"@type":"SportsTeam","name":"{e(g["home_name"])}"}},'
                   f'"awayTeam":{{"@type":"SportsTeam","name":"{e(g["away_name"])}"}}'
                   f'{offers}}}</script>')
+        jays_line = ('<p class="price-sub">Want it by section? Open the '
+                     '<a href="/jays.html">live Blue Jays section tracker</a>.</p>'
+                     if g["home_slug"] == "toronto-blue-jays" else "")
         body = f"""<div class="crumb"><a href="/">MLB</a> ›
 <a href="/team/{e(g["home_slug"])}/">{e(g["home_name"])}</a> › {e(g["away_name"])}</div>
-<h1>{e(title_m)} tickets</h1>
-<p class="sub">{datestr} · {timestr} · {e(g["venue"])}</p>
-<div class="box">
-{price_block}
-<a class="cta" href="{e(buy_url(g))}" target="_blank" rel="nofollow sponsored">Find tickets</a>
-<p class="sub" style="margin-top:10px">We check this game's resale price regularly and
-keep the history so you can tell a real dip from a fake one. {g["checks"]} checks so far.</p>
+<div class="stub reveal">
+  <div class="top">
+    <h1 class="match">{e(title_m)}</h1>
+    <div class="when">{datestr} · {timestr} · {e(g["venue"])}</div>
+  </div>
+  <div class="perf"></div>
+  <div class="bottom">
+    {price_block}
+    <div><a class="cta" href="{e(buy_url(g))}" target="_blank" rel="nofollow sponsored">Find tickets <span class="arrow">→</span></a></div>
+    <p class="price-sub">We check this game's resale price regularly and keep the
+    history, so you can tell a real dip from a fake one. {g["checks"]} checks so far.</p>
+    {jays_line}
+  </div>
 </div>
-<p style="margin-top:18px"><a href="/team/{e(g["home_slug"])}/">← all {e(g["home_name"])} home games</a></p>"""
+<p style="margin-top:18px"><a class="btn-ghost" href="/team/{e(g["home_slug"])}/">← all {e(g["home_name"])} home games</a></p>"""
         page(f"game/{g['game_pk']}/index.html",
              f"{title_m} Tickets — {datestr} | SeatDip",
              f"{title_m} tickets {datestr} at {g['venue']}. "

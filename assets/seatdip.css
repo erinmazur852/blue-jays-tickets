@@ -1,0 +1,216 @@
+/* SeatDip design system — energetic sports/tickets brand.
+   One cached stylesheet across every generated page. */
+
+:root {
+  /* ---- color tokens ---- */
+  --ink:        #0a1f3c;   /* deep navy, text + dark surfaces */
+  --ink-2:      #13315c;
+  --navy:       #1850a8;   /* brand blue */
+  --navy-bright:#2f7bf6;
+  --go:         #15c95f;   /* "deal / go" green */
+  --go-deep:    #0c8a3e;
+  --go-glow:    #5cf2a0;
+  --hot:        #ff5630;   /* price drop / hot game */
+  --hot-deep:   #e8391a;
+  --gold:       #ffc73a;   /* highlights, stars */
+  --bg:         #f4f7fc;
+  --bg-2:       #eaf0f9;
+  --card:       #ffffff;
+  --line:       #e2e9f3;
+  --muted:      #5d6b82;
+  --muted-2:    #8b97ab;
+
+  /* ---- gradients ---- */
+  --grad-hero: linear-gradient(120deg,#0a1f3c 0%,#13315c 40%,#1850a8 100%);
+  --grad-go:   linear-gradient(120deg,#0c8a3e,#15c95f 70%,#5cf2a0);
+  --grad-hot:  linear-gradient(120deg,#e8391a,#ff5630 60%,#ff8a3d);
+  --grad-mesh: radial-gradient(900px 500px at 12% -10%,rgba(47,123,246,.18),transparent 60%),
+               radial-gradient(700px 500px at 105% 0%,rgba(21,201,95,.16),transparent 55%);
+
+  /* ---- type ---- */
+  --display: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* ---- shape + motion ---- */
+  --r-sm: 8px; --r: 14px; --r-lg: 20px; --r-pill: 999px;
+  --shadow: 0 2px 8px rgba(10,31,60,.06), 0 8px 28px rgba(10,31,60,.07);
+  --shadow-lift: 0 8px 18px rgba(10,31,60,.10), 0 22px 48px rgba(10,31,60,.16);
+  --ring: 0 0 0 3px rgba(47,123,246,.28);
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; font-family: var(--body); color: var(--ink);
+  background: var(--bg); line-height: 1.55; -webkit-font-smoothing: antialiased;
+}
+body::before { /* fixed mesh wash behind everything */
+  content: ""; position: fixed; inset: 0; z-index: -1;
+  background: var(--grad-mesh); pointer-events: none;
+}
+a { color: var(--navy); text-decoration: none; }
+a:hover { color: var(--navy-bright); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.1; letter-spacing: -.02em; }
+
+/* ---- header ---- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(10,31,60,.82); backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.site-header .inner {
+  max-width: 1040px; margin: 0 auto; padding: 12px 20px;
+  display: flex; align-items: center; gap: 16px;
+}
+.brand {
+  font-family: var(--display); font-weight: 700; font-size: 20px;
+  color: #fff; display: inline-flex; align-items: center; gap: 8px;
+}
+.brand:hover { color: #fff; }
+.brand .mark {
+  width: 26px; height: 26px; border-radius: 7px; background: var(--grad-go);
+  display: inline-grid; place-items: center; box-shadow: 0 3px 10px rgba(21,201,95,.5);
+}
+.brand .mark svg { width: 17px; height: 17px; display: block; }
+.brand b { color: var(--go-glow); }
+.brand .tag { font-family: var(--body); font-weight: 500; font-size: 12px;
+  color: rgba(255,255,255,.6); margin-left: 2px; }
+
+.wrap { max-width: 1040px; margin: 0 auto; padding: 24px 20px; }
+
+/* ---- hero ---- */
+.hero {
+  position: relative; overflow: hidden; color: #fff;
+  background: var(--grad-hero); border-radius: var(--r-lg);
+  padding: 40px 30px; margin-top: 8px; box-shadow: var(--shadow);
+}
+.hero::after { /* animated sheen */
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(600px 300px at 80% -20%,rgba(21,201,95,.35),transparent 60%);
+  animation: drift 14s var(--ease) infinite alternate;
+}
+.hero > * { position: relative; z-index: 1; }
+.hero h1 { font-size: clamp(28px, 5vw, 46px); margin: 0 0 10px; }
+.hero h1 .pop { background: var(--grad-go); -webkit-background-clip: text;
+  background-clip: text; color: transparent; }
+.hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 620px; margin: 0; }
+.hero .ticker { /* animated dip line motif */
+  position: absolute; right: 24px; bottom: 18px; width: 200px; height: 80px;
+  opacity: .9; }
+.hero .ticker path { stroke-dasharray: 320; stroke-dashoffset: 320;
+  animation: draw 2.4s var(--ease) .3s forwards; }
+
+/* ---- breadcrumb ---- */
+.crumb { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+.crumb a { color: var(--muted); }
+.crumb a:hover { color: var(--navy); }
+
+/* ---- team grid ---- */
+.section-title { font-size: 14px; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--muted); margin: 30px 0 4px; }
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
+  gap: 14px; margin-top: 16px;
+}
+.team-card {
+  position: relative; display: block; background: var(--card);
+  border: 1px solid var(--line); border-radius: var(--r); padding: 16px 16px 14px;
+  box-shadow: var(--shadow); transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+  overflow: hidden;
+}
+.team-card::before { /* color spine that grows on hover */
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  background: var(--grad-go); transform: scaleY(.0); transform-origin: top;
+  transition: transform .3s var(--ease);
+}
+.team-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); text-decoration: none; }
+.team-card:hover::before { transform: scaleY(1); }
+.team-card .name { font-family: var(--display); font-weight: 600; font-size: 17px; color: var(--ink); }
+.team-card .meta { color: var(--muted); font-size: 13px; margin-top: 3px; }
+.team-card .div { display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 600;
+  color: var(--navy); background: var(--bg-2); padding: 2px 9px; border-radius: var(--r-pill); }
+
+/* ---- callout box ---- */
+.box {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
+  padding: 16px 18px; margin-top: 16px; box-shadow: var(--shadow);
+}
+.box.promo { background: linear-gradient(120deg,#fff, #eafaf0);
+  border-color: #bfead0; }
+.box.promo b { color: var(--go-deep); }
+
+/* ---- table ---- */
+.table-wrap { margin-top: 14px; border-radius: var(--r); overflow: hidden;
+  border: 1px solid var(--line); box-shadow: var(--shadow); background: var(--card); }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--muted); padding: 11px 14px; background: #fafcff; border-bottom: 2px solid var(--line); }
+td { padding: 12px 14px; border-bottom: 1px solid var(--line); font-size: 14px; }
+tbody tr { transition: background .15s var(--ease); }
+tbody tr:hover { background: #f3f8ff; }
+tr:last-child td { border-bottom: none; }
+.opp { font-weight: 600; font-family: var(--display); }
+.price { font-family: var(--display); font-weight: 700; }
+.price.none { color: var(--muted-2); font-weight: 500; }
+
+/* ---- badges ---- */
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px;
+  font-weight: 700; padding: 3px 9px; border-radius: var(--r-pill); }
+.badge.deal { color: #063; background: #d8f7e4; }
+.badge.hot { color: #fff; background: var(--grad-hot);
+  box-shadow: 0 2px 8px rgba(255,86,48,.4); animation: pulse 1.8s ease-in-out infinite; }
+
+/* ---- game page: ticket stub ---- */
+.stub {
+  position: relative; background: var(--card); border-radius: var(--r-lg);
+  box-shadow: var(--shadow); margin-top: 16px; overflow: hidden;
+  border: 1px solid var(--line);
+}
+.stub .top { background: var(--grad-hero); color: #fff; padding: 26px 26px 22px; position: relative; overflow: hidden; }
+.stub .top::after { content: ""; position: absolute; inset: 0;
+  background: radial-gradient(500px 240px at 90% -40%,rgba(21,201,95,.3),transparent 60%); }
+.stub .top > * { position: relative; z-index: 1; }
+.stub .match { font-family: var(--display); font-size: clamp(22px,4vw,32px); font-weight: 700; margin: 0; }
+.stub .when { color: rgba(255,255,255,.8); font-size: 15px; margin-top: 8px; }
+.stub .perf { /* perforation line between stub halves */
+  height: 0; border-top: 2px dashed var(--line); position: relative; margin: 0 20px; }
+.stub .perf::before, .stub .perf::after {
+  content: ""; position: absolute; top: -12px; width: 24px; height: 24px;
+  border-radius: 50%; background: var(--bg); border: 1px solid var(--line); }
+.stub .perf::before { left: -32px; } .stub .perf::after { right: -32px; }
+.stub .bottom { padding: 24px 26px; }
+.price-hero { font-family: var(--display); font-size: 40px; font-weight: 700; line-height: 1; }
+.price-hero .cur { font-size: 18px; color: var(--muted); font-weight: 600; }
+.price-sub { color: var(--muted); margin-top: 8px; font-size: 14px; }
+
+/* ---- buttons ---- */
+.cta {
+  display: inline-flex; align-items: center; gap: 8px; font-family: var(--display);
+  font-weight: 700; font-size: 15px; color: #fff; background: var(--grad-hot);
+  padding: 13px 24px; border-radius: var(--r-pill); margin-top: 14px;
+  box-shadow: 0 6px 18px rgba(255,86,48,.4); transition: transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.cta:hover { color: #fff; transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 26px rgba(255,86,48,.5); text-decoration: none; }
+.cta .arrow { transition: transform .2s var(--ease); }
+.cta:hover .arrow { transform: translateX(4px); }
+.btn-ghost { display: inline-block; margin-top: 12px; font-weight: 600; color: var(--navy); }
+
+/* ---- footer ---- */
+.site-footer { max-width: 1040px; margin: 40px auto; padding: 22px 20px;
+  color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); }
+.site-footer a { color: var(--muted); } .site-footer a:hover { color: var(--navy); }
+
+/* ---- motion ---- */
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes drift { from { transform: translate(0,0); } to { transform: translate(-30px,12px); } }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::after, *::before { animation: none !important; transition: none !important; scroll-behavior: auto; }
+  .hero .ticker path { stroke-dashoffset: 0; }
+}
+
+/* ---- reveal-on-scroll (progressive enhancement) ---- */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
