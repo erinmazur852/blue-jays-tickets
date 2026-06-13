@@ -1,0 +1,51 @@
+name: mlb-site
+
+on:
+  schedule:
+    - cron: "17 * * * *"   # hourly, offset from the Jays job
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mlb-site
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: fetch MLB schedule + prices
+        env:
+          TM_API_KEY: ${{ secrets.TM_API_KEY }}
+        run: python mlb_data.py
+
+      - name: build static site
+        run: python build_site.py
+
+      - name: deploy to Vercel
+        if: ${{ env.VERCEL_PROJECT_ID != '' }}
+        run: |
+          npx --yes vercel@latest deploy site --prod --yes \
+            --token "${{ secrets.VERCEL_TOKEN }}"
+
+      - name: commit data + price history
+        run: |
+          git config user.name "seatdip-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add site_data.json mlb_price_history.csv
+          git diff --cached --quiet && exit 0
+          git commit -m "mlb data refresh"
+          git pull --rebase
+          git push

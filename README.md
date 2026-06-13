@@ -4,7 +4,21 @@ Tracks the lowest resale price (overall and per section group) for every
 remaining Blue Jays home game at Rogers Centre, in CAD, and pushes a phone
 notification when prices drop.
 
-## How it works
+## The site (all 30 MLB teams)
+
+- **`mlb_data.py`** — pulls every team + remaining home game from the MLB
+  Stats API (no key) and, if `TM_API_KEY` is set, price ranges from the
+  Ticketmaster Discovery API. Accumulates `mlb_price_history.csv` and writes
+  `site_data.json`.
+- **`build_site.py`** — generates the static site into `site/`: homepage,
+  one page per team, one per game (~1,400 pages), plus `sitemap.xml`,
+  `robots.txt`, and schema.org markup for search engines. Also bundles the
+  Jays dashboard at `/jays.html`.
+- **`.github/workflows/mlb-site.yml`** — hourly: fetch → build → deploy
+  `site/` to Vercel. Needs secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID`,
+  `VERCEL_PROJECT_ID`, and optionally `TM_API_KEY`.
+
+## The Jays section tracker (the original tool)
 
 - **`fetch_prices.py`** — master schedule from the official MLB API, prices
   from Gametime's public feed (USD, converted at the Bank of Canada daily
