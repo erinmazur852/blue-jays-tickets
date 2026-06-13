@@ -90,6 +90,43 @@ els.forEach(function(e){{io.observe(e)}});}})();
 """
 
 
+RAW_DATA = ("https://raw.githubusercontent.com/erinmazur852/"
+            "blue-jays-tickets/main/data.json")
+DIP_SCRIPT = """<script>
+(function(){
+  var src = location.hostname.endsWith('.vercel.app') ? '__RAW_DATA__' : '/data.json';
+  function fmtDate(s){ if(!s) return ''; var p=s.split('-');
+    var mo=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return mo[+p[1]]+' '+(+p[2]); }
+  function cad(r){ return Math.round(r.min_total_cents*(parseFloat(r.usd_cad_rate)||1.4)/100); }
+  function lastTwo(rows, key){ var g={};
+    rows.forEach(function(r){ (g[key(r)]=g[key(r)]||[]).push(r); });
+    var out=[]; Object.keys(g).forEach(function(k){ var a=g[k];
+      a.sort(function(x,y){ return x.checked_at.localeCompare(y.checked_at); });
+      if(a.length>=2) out.push([a[a.length-2], a[a.length-1]]); });
+    return out; }
+  fetch(src,{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+    var ph=d.price_history||[], sh=d.section_history||[], meta={}, dips=[];
+    ph.forEach(function(r){ meta[r.event_id]={opp:r.opponent,date:r.game_date}; });
+    lastTwo(ph,function(r){return r.event_id;}).forEach(function(pr){
+      var o=cad(pr[0]), v=cad(pr[1]); if(o>0&&v>0&&v<o){ var m=meta[pr[1].event_id]||{};
+        dips.push({label:(m.opp||'')+' @ Jays',seg:fmtDate(m.date),o:o,v:v,pct:Math.round((o-v)/o*100)}); }});
+    lastTwo(sh,function(r){return r.event_id+'|'+r.section_group;}).forEach(function(pr){
+      var o=cad(pr[0]), v=cad(pr[1]); if(o>0&&v>0&&v<o){ var m=meta[pr[1].event_id]||{};
+        dips.push({label:(m.opp||'')+' @ Jays',seg:pr[1].section_group,o:o,v:v,pct:Math.round((o-v)/o*100)}); }});
+    dips.sort(function(a,b){return b.pct-a.pct;});
+    var top=dips.filter(function(d){return d.pct>=1;}).slice(0,14);
+    if(!top.length) return;
+    var html=top.map(function(d){ return '<span class="tick"><span class="m">'+d.label+
+      '</span><span class="seg">'+d.seg+'</span><span class="o">$'+d.o+
+      '</span><span class="n">$'+d.v+' CAD</span><span class="pct">\\u25bc '+d.pct+'%</span></span>'; }).join('');
+    document.getElementById('dipTrack').innerHTML=html+html;
+    var bar=document.getElementById('dipBar'); bar.hidden=false; bar.style.display='block';
+  }).catch(function(){});
+})();
+</script>""".replace("__RAW_DATA__", RAW_DATA)
+
+
 def write(path, content):
     full = os.path.join(SITE, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
@@ -143,11 +180,16 @@ def build(data):
   you can tell a real deal from a fake one — then jump straight to the cheapest seats.</p>
   {ticker}
 </div>
+<a class="ticker-bar reveal" id="dipBar" href="/jays.html" hidden style="display:none">
+  <span class="label"><span class="dot"></span> JUST DIPPED</span>
+  <div class="ticker-mask"><div class="ticker-track" id="dipTrack"></div></div>
+</a>
 <div class="box promo reveal">🔥 <b>Blue Jays fans:</b> try the
 <a href="/jays.html">section-by-section live price tracker</a> — every Rogers
 Centre section, price-drop history, and your own target alerts.</div>
 <div class="section-title">Pick your team</div>
-<div class="grid">{cards}</div>"""
+<div class="grid">{cards}</div>
+{DIP_SCRIPT}"""
     page("index.html", "SeatDip — MLB Ticket Prices & Price History by Team",
          "Compare ticket prices and price history for every MLB team's home games. "
          "See if today's price is a deal and find the cheapest seats by section.",
