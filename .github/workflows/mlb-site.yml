@@ -19,6 +19,7 @@ jobs:
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     steps:
       - uses: actions/checkout@v5
 
@@ -35,10 +36,8 @@ jobs:
         run: python build_site.py
 
       - name: deploy to Vercel
-        if: ${{ env.VERCEL_PROJECT_ID != '' }}
-        run: |
-          npx --yes vercel@latest deploy site --prod --yes \
-            --token "${{ secrets.VERCEL_TOKEN }}"
+        if: ${{ env.VERCEL_TOKEN != '' }}
+        run: npx --yes vercel@latest deploy site --prod --yes --token "$VERCEL_TOKEN"
 
       - name: commit data + price history
         run: |
